@@ -1,0 +1,30 @@
+<snippet>
+    <content>
+
+// Capacitor
+
+object capacitor {
+    phases ABCN;
+    name ${1:capacitor_};
+    phases_connected ABCD;
+    // Other Control Options - VAR (needs `remote_sense`, `VAr_set_high`, `VAr_set_low`) 
+    //                       - VOLT (needs `remote_sense`, `voltage_set_high`, `voltage_set_low`) 
+    //                       - VARVOLT (needs `remote_sense`, `voltage_set_high`, `voltage_set_low`)
+    control MANUAL;
+    capacitor_A 0.5 MVAr;
+    capacitor_B 0.5 MVAr;
+    capacitor_C 0.5 MVAr;
+    control_level INDIVIDUAL;
+    switchA OPEN;
+    switchB OPEN;
+    switchC CLOSED;
+    nominal_voltage 7200;
+}
+
+    </content>
+    <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+    <tabTrigger>capacitor</tabTrigger>
+    <!-- Optional: Set a scope to limit where the snippet will trigger -->
+    <scope>source.gridlabd</scope>
+</snippet>
+

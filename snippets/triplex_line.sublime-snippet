@@ -1,0 +1,18 @@
+<snippet>
+    <content>
+
+object triplex_line {
+    phases AS; // Options - BS, CS
+    length ${1:} ft;  
+    from ${2:};
+    to ${3:};
+    configuration ${4:default_triplex_line_configuration};
+}
+
+    </content>
+    <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+    <tabTrigger>triplex_line</tabTrigger>
+    <!-- Optional: Set a scope to limit where the snippet will trigger -->
+    <scope>source.gridlabd</scope>
+</snippet>
+

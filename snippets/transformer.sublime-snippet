@@ -1,0 +1,28 @@
+<snippet>
+    <content>
+
+object transformer {
+     name ${1:xmfr_};
+     from ${2:};
+     to ${3:};
+     phases ${4:};
+     configuration ${5:config_xmfr_};
+}
+
+object transformer_configuration {
+    name ${6:config_xmfr_};
+    connect_type DELTA_DELTA; // options - 
+    install_type PADMOUNT; // options - 
+    power_rating 500;
+    primary_voltage ${7:};
+    secondary_voltage ${8:};
+    resistance ${9:0.09};
+    reactance ${10:1.81};
+}
+
+    </content>
+    <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+    <tabTrigger>transformer</tabTrigger>
+    <!-- Optional: Set a scope to limit where the snippet will trigger -->
+    <!-- <scope>source.python</scope> -->
+</snippet>

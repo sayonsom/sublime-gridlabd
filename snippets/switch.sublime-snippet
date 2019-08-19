@@ -1,0 +1,15 @@
+<snippet>
+    <content>
+object switch {
+    name ${1:};
+    phases ABCN;
+    from ${2:};
+    to ${3:};
+    status CLOSED;
+}
+    </content>
+    <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+    <tabTrigger>switch</tabTrigger>
+    <!-- Optional: Set a scope to limit where the snippet will trigger -->
+    <scope>source.gridlabd</scope>
+</snippet>

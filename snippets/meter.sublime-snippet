@@ -1,0 +1,15 @@
+<snippet>
+    <content>
+
+object meter {
+    // Properties to measure - `measured_real_energy`, `measured_power`, `measured_real_power`
+    name ${1:meter_};
+    phases ABC;
+    nominal_voltage ${2:};
+}
+    </content>
+    <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+    <tabTrigger>meter</tabTrigger>
+    <!-- Optional: Set a scope to limit where the snippet will trigger -->
+    <scope>source.gridlabd</scope>
+</snippet>

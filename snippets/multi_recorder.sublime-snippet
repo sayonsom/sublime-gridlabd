@@ -1,0 +1,18 @@
+<snippet>
+    <content>
+
+// Multi-Recorder
+// --------------
+
+object multi_recorder{
+    name ${1:};
+    file ${2:}.csv;
+    interval 60;
+    property NodeName:PropertyName, NodeName:PropertyName, NodeName:PropertyName; 
+}
+    </content>
+    <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+    <tabTrigger>multi_recorder</tabTrigger>
+    <!-- Optional: Set a scope to limit where the snippet will trigger -->
+    <scope>source.gridlabd</scope>
+</snippet>

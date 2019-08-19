@@ -1,0 +1,231 @@
+<snippet>
+    <content>
+clock{ 
+     timezone EST+8EDT;
+     timestamp '2019-07-10 00:00:00'; 
+     stoptime '2019-07-11 00:00:00'; 
+}
+
+module tape; 
+
+module powerflow { 
+    solver_method NR; 
+    default_maximum_voltage_error 1e-6;
+};
+
+module residential {
+    implicit_enduses LIGHTS; 
+};
+
+// CO-SIMULATION
+// ================
+// ~ delete the following if not doing HELICS co-simulation
+module communication;
+
+object helics_msg {
+    name ;
+    config ;
+};
+
+
+// NODES 
+// ================
+
+object node {
+    name feeder_head;
+    bustype SWING;
+    phases ABCN;
+    nominal_voltage 132790;
+}
+
+
+// LINE CONFIGURATIONS
+// ===================
+// ~ remember to delete the unused configurations, they clutter the code 
+//
+// Default Overhead Lines
+// -------------------------
+
+ object line_configuration {
+    name default_oh_line_configuration;
+    conductor_A default_overhead_conductor;
+    conductor_B default_overhead_conductor;
+    conductor_C default_overhead_conductor;
+    conductor_N default_overhead_conductor_neutral;
+    spacing default_oh_line_spacing;
+}
+
+object overhead_line_conductor {
+    name default_overhead_conductor;
+    geometric_mean_radius .00446;
+    resistance 1.12;
+}
+
+object overhead_line_conductor {
+    name default_overhead_conductor_neutral;
+    geometric_mean_radius .00446;
+    resistance 1.12;
+}
+
+object line_spacing {
+    name default_oh_line_spacing;
+    distance_AB 2.5;
+    distance_BC 4.5;
+    distance_AC 7.0;
+    distance_AN 5.656854;
+    distance_BN 4.272002;
+    distance_CN 5.0;
+}
+
+
+// Default Underground Lines
+// -------------------------
+
+object line_configuration {
+    name default_ug_line_configuration;
+    conductor_A underground_line_conductor_100;
+    conductor_B underground_line_conductor_100;
+    conductor_C underground_line_conductor_100;
+    conductor_N underground_line_conductor_100;
+    spacing default_ug_line_spacing;
+}
+
+object underground_line_conductor {
+    name underground_line_conductor_100;
+    outer_diameter 1.980000;
+    conductor_gmr 0.036800;
+    conductor_diameter 1.150000;
+    conductor_resistance 0.105000;
+    neutral_gmr 0.003310;
+    neutral_resistance 5.903000;
+    neutral_diameter 0.102000;
+    neutral_strands 20.000000;
+    shield_gmr 0.000000;
+    shield_resistance 0.000000;
+}
+
+object line_spacing { 
+    name default_ug_line_spacing;
+    distance_AB 0.0 in; 
+    distance_BC 0.0 in; 
+    distance_AC 0.0 in; 
+    distance_AN 0.0 in; 
+    distance_BN 0.0 in; 
+    distance_CN 0.0 in; 
+} 
+
+
+// Default Triplex Lines
+// -------------------------
+
+
+object triplex_line_configuration {
+    name default_triplex_line_configuration;
+    conductor_1 default_triplex_conductor; 
+    conductor_2 default_triplex_conductor; 
+    conductor_N default_triplex_conductor; 
+    insulation_thickness 0.08; 
+    diameter 0.522; 
+}
+
+object triplex_line_conductor: { 
+    name default_triplex_conductor; 
+    resistance 0.48; 
+    geometric_mean_radius 0.0158; 
+}
+
+
+// LINES
+// ==========================
+
+
+
+// TRANSFORMERS
+// ==========================
+
+
+
+// SWITCHES
+// ==========================
+
+
+
+// VOLTAGE REGULATORS
+// ==========================
+// ~ delete these lines if not used in the model
+
+object regulator_configuration {
+    name default_voltage_regulator; // For Line Drop Compensation
+    connect_type 1;
+    band_center 122.000;
+    band_width 2.0;
+    time_delay 15.0;
+    raise_taps 16;
+    lower_taps 16;
+    current_transducer_ratio 1;
+    power_transducer_ratio 58;
+    compensator_r_setting_A 1.5;
+    compensator_x_setting_A 3.0;
+    CT_phase "ABC";
+    PT_phase "ABC";
+    regulation 0.10;
+    Control LINE_DROP_COMP; // Options- REMOTE_NODE, OUTPUT_VOLTAGE, REMOTE_NODE (needs sense_node in regulator object)
+    control_level INDIVIDUAL; // Options - BANK
+    Type B;
+    tap_pos_A 0;
+    tap_pos_B 0;
+    tap_pos_C 0;
+}
+
+object regulator_configuration {
+    name smart_voltage_regulator; // To simulate communication-enabled voltage regulators
+    connect_type 1;
+    band_center 122.000;
+    band_width 2.0;
+    time_delay 15.0;
+    raise_taps 16;
+    lower_taps 16;
+    current_transducer_ratio 1;
+    power_transducer_ratio 58;
+    compensator_r_setting_A 1.5;
+    compensator_x_setting_A 3.0;
+    CT_phase "ABC";
+    PT_phase "ABC";
+    regulation 0.10;
+    Control REMOTE_NODE; // Options- LINE_DROP_COMP, OUTPUT_VOLTAGE, REMOTE_NODE (needs sense_node in regulator object)
+    control_level INDIVIDUAL; // Options - BANK
+    Type B;
+    tap_pos_A 0;
+    tap_pos_B 0;
+    tap_pos_C 0;
+}
+
+
+
+// CAPACITOR
+// =========================
+// Required for maintaining voltage levels and reactive power management
+
+
+
+// END-USE CUSTOMERS
+// =========================
+
+
+
+// PLAYERS
+// =======================
+
+
+
+// RECORDERS
+// =======================
+
+
+
+    </content>
+    <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+    <tabTrigger>feeder_template</tabTrigger>
+    <!-- Optional: Set a scope to limit where the snippet will trigger -->
+    <scope>source.gridlabd</scope>
+</snippet>

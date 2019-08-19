@@ -1,0 +1,16 @@
+<snippet>
+    <content>
+object substation {
+    // Properties that can be measured from here - `average_distribution_load`, `distribution_power_B`, `distribution_power_C`
+    name ${1:substation_};
+    bustype SWING;
+    parent network_node;
+    reference_phase PHASE_A;
+    nominal_voltage 7199.558;
+}
+    </content>
+    <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+    <tabTrigger>substation</tabTrigger>
+    <!-- Optional: Set a scope to limit where the snippet will trigger -->
+    <scope>source.gridlabd</scope>
+</snippet>

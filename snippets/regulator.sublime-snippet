@@ -1,0 +1,21 @@
+<snippet>
+    <content>
+
+// Voltage Regulator
+
+object regulator {
+    name ${1:voltage_regulator_};
+    phases "ABC";
+    sense_node ${2:node_}; // Voltage at this node will cause tap changes
+    from ${3:from_node};
+    to ${4:to_node};
+    configuration ${5:default_voltage_regulator};
+}
+
+    </content>
+    <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+    <tabTrigger>regulator</tabTrigger>
+    <!-- Optional: Set a scope to limit where the snippet will trigger -->
+    <scope>source.gridlabd</scope>
+</snippet>
+

@@ -1,0 +1,16 @@
+
+<snippet>
+    <content>
+object load {
+    parent ${1:load_};
+    name ${2:meter_};
+    nominal_voltage ${3:};
+    phases ABC;
+    constant_power_A ${4:} kVA;
+}
+    </content>
+    <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+    <tabTrigger>load</tabTrigger>
+    <!-- Optional: Set a scope to limit where the snippet will trigger -->
+    <scope>source.gridlabd</scope>
+</snippet>

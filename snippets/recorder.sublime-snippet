@@ -1,0 +1,19 @@
+<snippet>
+    <content>
+
+// Recorder
+// --------
+
+object recorder {
+    parent ${1:};
+    file ${2:recorder_}.csv;
+    interval ${3:};
+    property ${4:};
+    // limit ;
+};
+    </content>
+    <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+    <tabTrigger>recorder</tabTrigger>
+    <!-- Optional: Set a scope to limit where the snippet will trigger -->
+    <scope>source.gridlabd</scope>
+</snippet>

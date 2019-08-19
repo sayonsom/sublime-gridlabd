@@ -1,0 +1,55 @@
+<snippet>
+    <content>
+
+// Customer Connection (Load)
+
+object transformer {
+     name ${1:};
+     phases AS; // Options - AS, BS, CS
+     from ${2:}; // Can be a three phase node
+     to ${3:}; // name of the triplex meter connecting the customer
+     configuration ${5:xmfr_config};
+}
+
+object transformer_configuration {
+     name ${6:xmfr_config};
+     connect_type SINGLE_PHASE_CENTER_TAPPED; // Options - 
+     install_type PADMOUNT; // Options - 
+     primary_voltage 7200 V;
+     secondary_voltage 120 V; 
+     power_rating 250;
+     powerA_rating 250; // make sure to match the A, B, C phase, default is A
+     impedance 0.015+0.0675j;
+}
+
+object triplex_meter {
+     name ${4:};
+     phases AS; // Options - AS, BS, CS, Same as transformer above
+     nominal_voltage 120.00;
+}
+object triplex_line {
+     name sample_load_tl;
+     from ${7:}; // Same as triplex meter name above
+     to ${8:};
+     phases AS; // Options - AS, BS, CS, Same as transformer above
+     length 10;
+     configuration triplex_line_config;
+}
+object triplex_meter {
+     name ${9:}; // Same as "to" in triplex_line above
+     phases AS;  // Options - AS, BS, CS, Same as transformer above
+     nominal_voltage 120.00;
+}
+object house {
+     name ${11:customer_};
+     parent ${10:}; // meter name from above
+     thermal_integrity_level LITTLE;
+}
+
+    </content>
+    <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+    <tabTrigger>new_customer</tabTrigger>
+    <!-- Optional: Set a scope to limit where the snippet will trigger -->
+    <scope>source.gridlabd</scope>
+</snippet>
+

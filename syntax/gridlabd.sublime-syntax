@@ -1,0 +1,58 @@
+%YAML 1.2
+---
+# See http://www.sublimetext.com/docs/3/syntax.html
+file_extensions:
+  - glm
+scope: source.gridlabd
+contexts:
+  main:
+    # Strings begin and end with quotes, and use backslashes as an escape
+    # character
+    - match: '"'
+      scope: punctuation.definition.string.begin.gridlabd
+      push: double_quoted_string
+
+    # Comments begin with a '//' and finish at the end of the line
+    - match: '//'
+      scope: punctuation.definition.comment.gridlabd
+      push: line_comment
+
+    # Keywords are if, else for and while.
+    # Note that blackslashes don't need to be escaped within single quoted
+    # strings in YAML. When using single quoted strings, only single quotes
+    # need to be escaped: this is done by using two single quotes next to each
+    # other.
+    - match: '\b(object|module|#include|#set|#define|clock|variables|comments)\b'
+      scope: keyword.control.gridlabd
+
+    # Special Words
+    - match: '\b(node|overhead_line|underground_line|substation|meter|regulator|capacitor|switch)\b'
+      scope: variable.language.cs
+
+    # Configuration classes
+
+    # Properties
+    - match: '\b(name|phases|configuration|configure|timezone)\b'
+      scope: storage.type.function.lambda.cs
+
+    # Numbers
+    - match: '\b(-)?[0-9.]+\b'
+      scope: constant.other.cs
+
+
+    # String values of different object properties
+    - match: \b(NONE|DELTA-DELTA|PADMOUNT)\b
+      scope: constant.language.cs
+
+  double_quoted_string:
+    - meta_scope: string.quoted.double.gridlabd
+    - match: '\\.'
+      scope: constant.character.escape.gridlabd
+    - match: '"'
+      scope: punctuation.definition.string.end.gridlabd
+      pop: true
+
+  line_comment:
+    - meta_scope: comment.line.gridlabd
+    - match: $
+      pop: true

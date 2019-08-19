@@ -1,0 +1,13 @@
+<snippet>
+    <content>
+object node {
+    name ${1:node_};
+    phases ${2:ABC};
+    nominal_voltage ${3:7200.0};  
+}
+    </content>
+    <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+    <tabTrigger>node</tabTrigger>
+    <!-- Optional: Set a scope to limit where the snippet will trigger -->
+    <scope>source.gridlabd</scope>
+</snippet>
