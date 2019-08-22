@@ -63,7 +63,7 @@ _Alphabetically_:
 ### Building a simulation model demonstration
 Let's build a Simple Unbalanced Feeder Test System (SUFTS), as shown in the figure below:
 
-![Simple Unbalanced Feeder Test System](example_built_models/figs/sufts.svg?raw=True "Simple Unbalanced Feeder Test System")
+![Simple Unbalanced Feeder Test System](example_built_models/figs/sufts.png?raw=True "Simple Unbalanced Feeder Test System")
 
 Here's a rundown of the keystrokes you have to make (and off course provide the correct parameters).
 
@@ -103,17 +103,15 @@ In 2016, an open-source [language support for GridLAB-D](https://github.com/nico
 
 ### Tip Jar
 
-If this project help you reduce time to develop, you can buy me a cup of coffee :)
-[](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RHSC6DAKVML9W&source=url)
-![Scan this on your phone to send a donation]()
+If this project help you reduce time to develop, please 
+[buy me a cup of coffee](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RHSC6DAKVML9W&source=url) :)
 
 
+#### Featured
 
-#### Blogs
+This post was first published in [thesmartgrid.us](http://thesmartgrid.us) and re-posted in Medium. 
 
-This post was first published in thesmartgrid.com and re-posted in Medium. 
 
-#### Video Tutorial
 
 
 
