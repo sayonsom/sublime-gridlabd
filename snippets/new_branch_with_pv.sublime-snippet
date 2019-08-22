@@ -1,0 +1,97 @@
+<snippet>
+    <content>
+
+// New feeder branch with at least one customer with PV
+
+object transformer {
+     name ${1:};
+     phases AS; // Options - AS, BS, CS
+     from ${2:}; // Can be a three phase node
+     to ${3:}; // name of the triplex meter connecting the customer
+     configuration ${5:xmfr_config};
+}
+
+object transformer_configuration {
+     name ${6:xmfr_config};
+     connect_type SINGLE_PHASE_CENTER_TAPPED; // Options - 
+     install_type PADMOUNT; // Options - POLETOP (cheaper), VAULT (for building)
+     primary_voltage 7200 V;
+     secondary_voltage 120 V; 
+     power_rating 250;
+     powerA_rating 250; // make sure to match the A, B, C phase, default is A
+     impedance 0.015+0.0675j;
+}
+
+object triplex_meter {
+     name ${4:}; // Main house node -- solar also connects here
+     phases AS; // Options - AS, BS, CS, Same as transformer above
+     nominal_voltage 120.00;
+}
+object triplex_line {
+     name sample_load_tl;
+     from ${7:}; // Same as triplex meter name above
+     to ${8:};
+     phases AS; // Options - AS, BS, CS, Same as transformer above
+     length 10;
+     configuration default_triplex_line_configuration;
+}
+object triplex_meter {
+     name ${9:}; // Same as "to" in triplex_line above
+     phases AS;  // Options - AS, BS, CS, Same as transformer above
+     nominal_voltage 120.00;
+}
+object house {
+     name ${11:customer_};
+     parent ${10:}; // meter name from above
+     thermal_integrity_level LITTLE;
+}
+
+// Solar PV Connection connection
+object triplex_line {
+     name ${12:solar_};
+     from ${13:house_}; // From the first triplex meter, i.e. house node
+     to   ${14:solar_triplex_};  // Triplex Meter Below
+     phases AS;
+     length 10;
+     configuration default_triplex_line_configuration;
+}
+object triplex_meter {
+     name ${15:solar_triplex_}; 
+     phases ${14:AS};   // Same phase as the house node
+     nominal_voltage 120.00;
+}
+object inverter {
+    name ${17:solar_inverter_};
+    phases AS;
+    parent ${16:solar_triplex_};
+    generator_status ONLINE;
+    inverter_type FOUR_QUADRANT;
+    four_quadrant_control_mode CONSTANT_PF;
+    generator_mode SUPPLY_DRIVEN;
+    inverter_efficiency .95;
+    rated_power ${18:5000};
+}
+
+object solar {
+    name ${19:solar_pv_};
+    phases AS;
+    parent ${20:solar_inverter_}; // Parent is the inverter
+    generator_status ONLINE;
+    generator_mode SUPPLY_DRIVEN;
+    panel_type SINGLE_CRYSTAL_SILICON;
+    area 250 ft^2;
+    tilt_angle 47.0;
+    efficiency 0.25;
+    orientation_azimuth 180; //equator-facing (South)
+    orientation FIXED_AXIS;
+    SOLAR_TILT_MODEL SOLPOS;
+    SOLAR_POWER_MODEL FLATPLATE;
+}
+
+    </content>
+    <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+    <tabTrigger>new_branch_with_pv</tabTrigger>
+    <!-- Optional: Set a scope to limit where the snippet will trigger -->
+    <scope>source.gridlabd</scope>
+</snippet>
+

@@ -1,0 +1,72 @@
+<snippet>
+    <content>
+object triplex_line {
+     name ;
+     from cust_triplex_meter; // Same as triplex meter name above
+     to house_triplex_meter_2;
+     phases AS; // Options - AS, BS, CS, Same as transformer above
+     length 10;
+     configuration default_triplex_line_configuration;
+}
+
+object triplex_meter {
+     name ; // Same as "to" in triplex_line above
+     phases AS;  // Options - AS, BS, CS, Same as transformer above
+     nominal_voltage 120.00;
+}
+
+object house {
+     name ;
+     parent ; // meter name from above
+     thermal_integrity_level LITTLE;
+}
+
+
+// Solar PV Connection connection
+
+object triplex_line {
+     name ${1:solar_};
+     from ${2:house_}; // From the first triplex meter, i.e. house node
+     to   ${3:solar_triplex_};  // Triplex Meter Below
+     phases AS;
+     length 10;
+     configuration default_triplex_line_configuration;
+}
+object triplex_meter {
+     name ${4:solar_triplex_}; 
+     phases ${6:AS};   // Same phase as the house node
+     nominal_voltage 120.00;
+}
+object inverter {
+    name ${5:solar_inverter_};
+    phases AS;
+    parent ${7:solar_triplex_};
+    generator_status ONLINE;
+    inverter_type FOUR_QUADRANT;
+    four_quadrant_control_mode CONSTANT_PF;
+    generator_mode SUPPLY_DRIVEN;
+    inverter_efficiency .95;
+    rated_power ${8:5000};
+}
+
+object solar {
+    name ${9:solar_pv_};
+    phases AS;
+    parent ${10:solar_inverter_}; // Parent is the inverter
+    generator_status ONLINE;
+    generator_mode SUPPLY_DRIVEN;
+    panel_type SINGLE_CRYSTAL_SILICON;
+    area 250 ft^2;
+    tilt_angle 47.0;
+    efficiency 0.25;
+    orientation_azimuth 180; //equator-facing (South)
+    orientation FIXED_AXIS;
+    SOLAR_TILT_MODEL SOLPOS;
+    SOLAR_POWER_MODEL FLATPLATE;
+}
+   </content>
+    <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+    <tabTrigger>add_house_with_pv_this_xmfr</tabTrigger>
+    <!-- Optional: Set a scope to limit where the snippet will trigger -->
+    <scope>source.gridlabd</scope>
+</snippet>

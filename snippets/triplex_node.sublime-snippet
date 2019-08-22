@@ -1,13 +1,18 @@
 <snippet>
     <content>
-object node {
-    name ${1:node_};
-    phases ${2:ABC};
-    nominal_voltage ${3:7200.0};  // line-to-neutral voltage, i,e. line-line volt/sqrt(3)
-}
+object triplex_node {
+    name ${1:triplex_node_};
+    phases ${2:AS};
+    voltage_1 120 + 0j;     
+    voltage_2 120 + 0j;
+    voltage_N 0;
+};
+
     </content>
     <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
-    <tabTrigger>node</tabTrigger>
+    <tabTrigger>triplex_node</tabTrigger>
     <!-- Optional: Set a scope to limit where the snippet will trigger -->
     <scope>source.gridlabd</scope>
 </snippet>
+
+

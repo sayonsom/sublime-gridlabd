@@ -1,0 +1,28 @@
+<snippet>
+    <content>
+object triplex_line {
+     name sample_load_tl_1;
+     from cust_triplex_meter; // Same as triplex meter name above
+     to house_triplex_meter_2;
+     phases AS; // Options - AS, BS, CS, Same as transformer above
+     length 10;
+     configuration default_triplex_line_configuration;
+}
+object triplex_meter {
+     name house_triplex_meter_2; // Same as "to" in triplex_line above
+     phases AS;  // Options - AS, BS, CS, Same as transformer above
+     nominal_voltage 120.00;
+}
+object house {
+     name customer_house_2;
+     parent house_triplex_meter_2; // meter name from above
+     thermal_integrity_level LITTLE;
+}
+   </content>
+    <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+    <tabTrigger>add_house_this_xmfr</tabTrigger>
+    <!-- Optional: Set a scope to limit where the snippet will trigger -->
+    <scope>source.gridlabd</scope>
+</snippet>
+
+
