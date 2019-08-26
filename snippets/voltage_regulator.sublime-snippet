@@ -1,0 +1,41 @@
+<snippet>
+    <content>
+
+object regulator {
+    name ${1:regulator_};
+    phases ${2:};
+    from ${3:};
+    to ${4:};
+    configuration ${5:vr_config_default};
+}
+
+object regulator_configuration {
+    name ${6:vr_config_default};
+    connect_type 2;
+    band_center 122.000;
+    band_width 2.0;
+    time_delay 30.0;
+    raise_taps 16;
+    lower_taps 16;
+    current_transducer_ratio 350;
+    power_transducer_ratio 40;
+    compensator_r_setting_A 1.5;
+    compensator_x_setting_A 3.0;
+    compensator_r_setting_B 1.5;
+    compensator_x_setting_B 3.0;
+    CT_phase "ABC";
+    PT_phase "ABC";
+    regulation 0.10;
+    Control LINE_DROP_COMP;
+    control_level INDIVIDUAL;
+    Type A;
+    tap_pos_A 7;
+    tap_pos_B 4;
+}
+
+    </content>
+    <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+    <tabTrigger>volt_reg</tabTrigger>
+    <!-- Optional: Set a scope to limit where the snippet will trigger -->
+    <!-- <scope>source.python</scope> -->
+</snippet>

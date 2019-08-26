@@ -15,6 +15,15 @@ module residential {
     implicit_enduses LIGHTS; 
 };
 
+// CO-SIMULATION
+// ================
+// ~ delete the following if not doing HELICS co-simulation
+// module communication;
+
+// object helics_msg {
+//    name ;
+//    config ;
+// };
 
 
 // NODES 
@@ -24,25 +33,8 @@ object node {
     name feeder_head;
     bustype SWING;
     phases ABCN;
-    nominal_voltage 115000;
+    nominal_voltage 7200;
 }
-
-object node {
-     name node2;
-     phases ABCN;
-     nominal_voltage 13000;  
- }
-
-
-object node {
-    name node3;
-    phases ABC;
-    nominal_voltage 13000.0;  
-}
-
-
-
-
 
 
 // LINE CONFIGURATIONS
@@ -145,42 +137,11 @@ object triplex_line_conductor: {
 // ==========================
 
 
-object overhead_line {
-    name oh_line_1;
-    phases ABC;
-    from node2;
-    to node3;
-    length 500;
-    configuration default_oh_line_configuration;
-}
-
-
-
 
 // TRANSFORMERS
 // ==========================
 
 
-object transformer {
-     name xmfr_1;
-     from feeder_head;
-     to node2;
-     phases ABCN;
-     configuration config_xmfr_1;
-}
-
-object transformer_configuration {
-    name config_xmfr_1;
-    connect_type DELTA_DELTA; // options - 
-    install_type PADMOUNT; // options - 
-    power_rating 500;
-    primary_voltage 115000;
-    secondary_voltage 13000;
-    resistance 0.09;
-    reactance 1.81; 
-}
-
-    
 
 // SWITCHES
 // ==========================
@@ -191,28 +152,7 @@ object transformer_configuration {
 // ==========================
 // ~ delete these lines if not used in the model
 
-object regulator_configuration {
-    name default_voltage_regulator; // For Line Drop Compensation
-    connect_type 1;
-    band_center 122.000;
-    band_width 2.0;
-    time_delay 15.0;
-    raise_taps 16;
-    lower_taps 16;
-    current_transducer_ratio 1;
-    power_transducer_ratio 58;
-    compensator_r_setting_A 1.5;
-    compensator_x_setting_A 3.0;
-    CT_phase "ABC";
-    PT_phase "ABC";
-    regulation 0.10;
-    Control LINE_DROP_COMP; // Options- REMOTE_NODE, OUTPUT_VOLTAGE, REMOTE_NODE (needs sense_node in regulator object)
-    control_level INDIVIDUAL; // Options - BANK
-    Type B;
-    tap_pos_A 0;
-    tap_pos_B 0;
-    tap_pos_C 0;
-}
+
 
 object regulator_configuration {
     name smart_voltage_regulator; // To simulate communication-enabled voltage regulators
@@ -238,6 +178,20 @@ object regulator_configuration {
 }
 
 
+// Voltage Regulator
+
+object regulator {
+    name voltage_regulator_;
+    phases "ABC";
+    sense_node node_; // Voltage at this node will cause tap changes
+    from feeder_head;
+    to n3;
+    configuration smart_voltage_regulator;
+}
+
+
+
+
 
 // CAPACITOR
 // =========================
@@ -249,80 +203,6 @@ object regulator_configuration {
 // =========================
 
 
-
-
-// Customer Connection (Load)
-
-
-
-
-
-
-object transformer {
-     name cust_xmfr;
-     phases AS; // Options - AS, BS, CS
-     from node3; // Can be a three phase node
-     to cust_triplex_meter; // name of the triplex meter connecting the customer
-     configuration xmfr_config;
-}
-
-object transformer_configuration {
-     name xmfr_config;
-     connect_type SINGLE_PHASE_CENTER_TAPPED; // Options - 
-     install_type PADMOUNT; // Options - 
-     primary_voltage 7200 V;
-     secondary_voltage 120 V; 
-     power_rating 250;
-     powerA_rating 250; // make sure to match the A, B, C phase, default is A
-     impedance 0.015+0.0675j;
-}
-
-object triplex_meter {
-     name cust_triplex_meter;
-     phases AS; // Options - AS, BS, CS, Same as transformer above
-     nominal_voltage 120.00;
-}
-object triplex_line {
-     name sample_load_tl;
-     from cust_triplex_meter; // Same as triplex meter name above
-     to house_triplex_meter;
-     phases AS; // Options - AS, BS, CS, Same as transformer above
-     length 10;
-     configuration default_triplex_line_configuration;
-}
-object triplex_meter {
-     name house_triplex_meter; // Same as "to" in triplex_line above
-     phases AS;  // Options - AS, BS, CS, Same as transformer above
-     nominal_voltage 120.00;
-}
-object house {
-     name customer_house;
-     parent house_triplex_meter; // meter name from above
-     thermal_integrity_level LITTLE;
-}
-
-object triplex_line {
-     name sample_load_tl_1;
-     from cust_triplex_meter; // Same as triplex meter name above
-     to house_triplex_meter_2;
-     phases AS; // Options - AS, BS, CS, Same as transformer above
-     length 10;
-     configuration default_triplex_line_configuration;
-}
-object triplex_meter {cmd
-     name house_triplex_meter_2; // Same as "to" in triplex_line above
-     phases AS;  // Options - AS, BS, CS, Same as transformer above
-     nominal_voltage 120.00;
-}
-object house {
-     name customer_house_2;
-     parent house_triplex_meter_2; // meter name from above
-     thermal_integrity_level LITTLE;
-}
-
-    
-
-    
 
 // PLAYERS
 // =======================

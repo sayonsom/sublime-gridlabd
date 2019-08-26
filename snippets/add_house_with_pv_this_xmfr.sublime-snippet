@@ -16,9 +16,36 @@ object triplex_meter {
 }
 
 object house {
-     name ;
-     parent ; // meter name from above
-     thermal_integrity_level LITTLE;
+  name ${6:house_};
+  parent ${7:house_}; // meter name from above
+  floor_area 1500; 
+  // schedule_skew 3600; // shifting the normal appliance schedule by these many seconds
+
+  heating_system_type HEAT_PUMP; // Options: RESISTANCE, HEAT_PUMP, GAS, NONE
+  heating_COP 3.0;
+  heating_setpoint HEATING*1;
+
+  cooling_system_type ELECTRIC;
+  cooling_setpoint COOLING*1.2;
+
+  thermal_integrity_level NORMAL; // UNKNOWN, VERY_GOOD, GOOD, ABOVE_NORMAL, NORMAL, BELOW_NORMAL, LITTLE, VERY_LITTLE
+  air_temperature 70;
+  mass_temperature 70;
+  cooling_COP 2.6;
+}
+
+object ZIPload {
+    name ${8:zipload_};
+    parent ; // house name from above
+    base_power LIGHTS*0.1; // 
+    // schedule_skew 7200;
+    heatgain_fraction 0.9;
+    power_pf 1.000;
+    current_pf 1.000;
+    impedance_pf 1.000;
+    impedance_fraction 0.300000;
+    current_fraction 0.300000;
+    power_fraction 0.400000;
 }
 
 
@@ -39,14 +66,15 @@ object triplex_meter {
 }
 object inverter {
     name ${5:solar_inverter_};
-    phases AS;
+    phases AS; 
     parent ${7:solar_triplex_};
+    generator_mode SUPPLY_DRIVEN; // Options - SUPPLY_DRIVEN, CONSTANT_PF, CONSTANT_PQ, CONSTANT_V, UNKNOWN
     generator_status ONLINE;
-    inverter_type FOUR_QUADRANT;
+    inverter_type FOUR_QUADRANT; // As of now, just use FOUR_QUADRANT inverters only
     four_quadrant_control_mode CONSTANT_PF;
     generator_mode SUPPLY_DRIVEN;
     inverter_efficiency .95;
-    rated_power ${8:5000};
+    rated_power ${8:5000}; // Units - VA
 }
 
 object solar {

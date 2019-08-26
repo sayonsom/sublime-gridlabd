@@ -12,9 +12,9 @@ A Sublime Text 3 snippet and model templates collection to supercharge electric 
 
 ### Installation
 
-Since sublime-gridlabd is just a bunch of files, it can be downloaded on any computer that has Sublime Text, and filex can be extracted to the correct folder:
+Since `sublime-gridlabd` is just a bunch of files, it can be downloaded on any computer that has Sublime Text, and files can be extracted to the correct folder:
 
-Here can be some common installation workflows:
+Here are some common installation work-flows:
 
 #### Windows 
 
@@ -37,16 +37,18 @@ Here can be some common installation workflows:
 
 _Alphabetically_: 
 
-- `add_house_this_xmfr` : Add a customer house in the same secondary distribution system
+- `add_house_this_xmfr` : Add a customer house in the same secondary distribution system. The customer house has a default ZIP load
 - `add_house_with_pv_this_xmfr` : Add a customer house template in the same secondary distribution system, and this customer has a solar PV installation in their house. 
 - `add_solar` : Add a solar PV installation template to an existing house/customer node
 - `capacitor` : Install a capacitor
-- `feeder_template` : Create a template for developing a boiler-plate feeder model. This has default configurations for overhead, ungergroud, triplex lines, transformers, and regulators. To create new configurations, the user can create 
+- `feeder_template` : Create a template for developing a boiler-plate feeder model. This has default configurations for overhead, underground, triplex lines, transformers, and regulators. To create new configurations, the user can create
+- `house`: Add a house with a default ZIP load. The house can be replaced be replaced by a typical American house with appliances using the following command. 
+- `house_detail`: Creates a typical American household with appliances such as dishwasher, washer-dryer, microwave ovens, etc.  
 - `load` : Add a three-phase load template to the model
 - `meter` : Add a meter template to the model
 - `multi_recorder` : A template for recording multiple measurements in a single file, based on `tape` module
 - `new_branch` : Creates a secondary distribution system branch, with one distribution transformer and customer
-- `new_branch_with_pv` : Creates a secondary distribution system branch, with one distribution transformer and customer, and this customer has a solar PV installed
+- `new_branch_with_pv` : Creates a secondary distribution system branch, with one distribution transformer and customer, and this customer has a solar PV installed. Please remember that every model that has a solar PV installation will need a climate file. If you are developing using the `feeder_template` short-code, please remember to uncomment the climate object and module towards top of the file.  There are some climate files (TMY3 format, do not use TMY2 as it does not deal with Daylight Savings Time) in the resources/climate_files directory of this repository, else you can download by ZIP Code from [this NREL Website](https://rredc.nrel.gov/solar/old_data/nsrdb/1991-2005/tmy3/by_state_and_city.html). 
 - `node` : Adds a new node object to the model
 - `oh_line` : Adds a new overhead line to the model, based on default configuration. 
 - `player` : Adds a player object template to pass to other objects, for varying properties of those objects w.r.t time.
@@ -61,50 +63,41 @@ _Alphabetically_:
 
 
 ### Building a simulation model demonstration
-Let's build a Simple Unbalanced Feeder Test System (SUFTS), as shown in the figure below:
 
-![Simple Unbalanced Feeder Test System](example_built_models/figs/sufts.png?raw=True "Simple Unbalanced Feeder Test System")
+#### Example 1: One Node Test System
 
-Here's a rundown of the keystrokes you have to make (and off course provide the correct parameters).
 
-```
-feeder_template
-```
-Go to the "Nodes" section of the template that just got created:
 
-```
-node
-node
-node
 
-add_house_this_xmfr
-add_house_this_xmfr
+#### Example 2: Simple Smart Feeder Test System (S2FTS)
 
-recorder
-```
+![Simple Unbalanced Feeder Test System](example_built_models/figs/sufts.png?raw=True "S2FTS Schematic Diagram")
 
-You can download the code (i.e. GridLAB-D model) for the SUFTS model here. 
+Follow along this Youtube video tutorial, or download the paper for the all the data. (If you use this model in your research, please consider citing it. Here are some common citation formats Bibtex, IEEE Format. 
 
-#### Did you notice an efficiency boost? 
+You can download the code (i.e. GridLAB-D model) for the S2FTS model here. 
 
-16 lines of typing to generate XXXX lines of code. I would call that XX.XX % efficiency improvement. In terms of time, it took me 4 minutes to build the model, compared to 2.5 hours the first time I built it using the naive method. Here's a list of `sublime-gridlabd` shortcodes. 
+##### Did you notice an efficiency boost? 
+
+16 lines of typing to generate XXXX lines of code. I would call that XX.XX % efficiency improvement. In terms of time, it took me 4 minutes to build the model, compared to 2.5 hours the first time I built it using the naive method. Here's a list of `sublime-gridlabd` shortcodes.
+
 
 ###  Installing `Sublime_GridLABD`
 
 Feel free to build your own model using the shortcodes above. 
 
-###  Roadmap and other editors?
-In 2016, an open-source [language support for GridLAB-D](https://github.com/nicorikken/language-glm) was published for Atom. However, it doesn't have the ease of building models that `sublime-gridlabd` has. Also, Atom is inefficient for handling a large-sized GLM file, where Sublime Text has a natural advantage. That is why I thought building a developer pack for Sublime would suffice. If there's sufficient interest, I will rollout similar GridLAB-D development packages for other editors (VIM, VSCode, etc).  
- 
+###  Road map and other editors?
+In 2016, an open-source [language support for GridLAB-D](https://github.com/nicorikken/language-glm) was published for Atom. However, it doesn't have the ease of building models that `sublime-gridlabd` has. Also, Atom is inefficient for handling a large-sized GLM file, where Sublime Text has a natural advantage. That is why I thought building a developer pack for Sublime would suffice. If there's sufficient interest, I will roll out similar GridLAB-D development packages for other editors (VIM, VSCode, etc).  
+
 ### Understanding the intent and the limitations
 
-`sublime-gridlabd` is very effecient for building new models - especially, small, experimental ones, or for adding on top of huge feeder models. It does not replace any conversion-based workflows people use with GridLAB-D. Also, this is not intended to simplify the GridLAB-D learning curve, but, make development faster for those who are already well-versed with GridLAB-D. 
+`sublime-gridlabd` is very efficient for building new models - especially, small, experimental ones, or for adding on top of huge feeder models. It does not replace any conversion-based work-flows people use with GridLAB-D. Also, this is not intended to simplify the GridLAB-D learning curve, but, make development faster for those who are already well-versed with GridLAB-D. 
 
 
 ### Tip Jar
 
-If this project help you reduce time to develop, please 
-[buy me a cup of coffee](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RHSC6DAKVML9W&source=url) :)
+If sublime-gridlabd helps reduce time modeling and development time for you, please 
+[consider funding The Smart Grid Project](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RHSC6DAKVML9W&source=url) :)
 
 
 #### Featured

@@ -1,7 +1,7 @@
 <snippet>
     <content>
 
-// Customer Connection with Solar PV (Load)
+// New feeder branch with at least one customer with PV
 
 object transformer {
      name ${1:};
@@ -14,7 +14,7 @@ object transformer {
 object transformer_configuration {
      name ${6:xmfr_config};
      connect_type SINGLE_PHASE_CENTER_TAPPED; // Options - 
-     install_type PADMOUNT; // Options - 
+     install_type PADMOUNT; // Options - POLETOP (cheaper), VAULT (for building)
      primary_voltage 7200 V;
      secondary_voltage 120 V; 
      power_rating 250;
@@ -90,7 +90,7 @@ object solar {
 
     </content>
     <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
-    <tabTrigger>new_customer_with_pv</tabTrigger>
+    <tabTrigger>new_branch_with_pv</tabTrigger>
     <!-- Optional: Set a scope to limit where the snippet will trigger -->
     <scope>source.gridlabd</scope>
 </snippet>

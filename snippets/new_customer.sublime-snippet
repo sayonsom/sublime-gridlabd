@@ -1,7 +1,7 @@
 <snippet>
     <content>
 
-// Customer Connection (Load)
+// New Feeder Branch
 
 object transformer {
      name ${1:};
@@ -14,7 +14,7 @@ object transformer {
 object transformer_configuration {
      name ${6:xmfr_config};
      connect_type SINGLE_PHASE_CENTER_TAPPED; // Options - 
-     install_type PADMOUNT; // Options - 
+     install_type PADMOUNT; // Options - POLETOP (cheaper), VAULT (for building)
      primary_voltage 7200 V;
      secondary_voltage 120 V; 
      power_rating 250;
@@ -23,6 +23,7 @@ object transformer_configuration {
 }
 
 object triplex_meter {
+     // this meter can also be replaced with a triplex_node
      name ${4:};
      phases AS; // Options - AS, BS, CS, Same as transformer above
      nominal_voltage 120.00;
@@ -33,7 +34,7 @@ object triplex_line {
      to ${8:};
      phases AS; // Options - AS, BS, CS, Same as transformer above
      length 10;
-     configuration triplex_line_config;
+     configuration default_triplex_line_configuration;
 }
 object triplex_meter {
      name ${9:}; // Same as "to" in triplex_line above
@@ -48,7 +49,7 @@ object house {
 
     </content>
     <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
-    <tabTrigger>new_customer</tabTrigger>
+    <tabTrigger>new_branch</tabTrigger>
     <!-- Optional: Set a scope to limit where the snippet will trigger -->
     <scope>source.gridlabd</scope>
 </snippet>

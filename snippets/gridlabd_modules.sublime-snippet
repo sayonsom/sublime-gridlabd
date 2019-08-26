@@ -17,6 +17,33 @@ module residential {
     implicit_enduses LIGHTS; 
 };
 
+module generators;
+
+// ADDING CLIMATE DATA 
+// ================
+
+// module climate;
+
+// object csv_reader {
+//      name model_csv_reader;
+//      filename "weather_data.csv";
+// };
+
+
+// object climate {
+//    // Note:  TMY2 files do not support DST. Hence TMY3 files downloaded from NREL website as CSV files are preferred.
+//    // tmyfile "CA-Sacramento.tmy2"; 
+//       reader model_csv_reader;
+//       name model_climate;
+//       tmyfile "weather_data.csv";
+     
+// };
+
+// --------------------
+
+
+
+
 // CO-SIMULATION
 // ================
 // ~ delete the following if not doing HELICS co-simulation

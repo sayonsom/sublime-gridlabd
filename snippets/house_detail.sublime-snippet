@@ -1,0 +1,156 @@
+<snippet>
+    <content>
+
+// Detailed residential model
+// --------------------------
+
+object house {
+  name ${1:house_};
+  parent ${2:house_}; // meter name from above
+  floor_area 1500; 
+  // schedule_skew 3600; // shifting the normal appliance schedule by these many seconds
+
+  heating_system_type HEAT_PUMP;
+  heating_COP 3.0;
+  heating_setpoint HEATING*1;
+
+  cooling_system_type ELECTRIC;
+  cooling_setpoint COOLING*1.2;
+
+  thermal_integrity_level 6;
+  air_temperature 70;
+  mass_temperature 70;
+  cooling_COP 2.6;
+}
+
+object ZIPload {
+  name ${3:zipload_};
+  parent ; // same house name as the house
+  base_power LIGHTS*0.1; // 
+  // schedule_skew 7200;
+  heatgain_fraction 0.9;
+  power_pf 1.000;
+  current_pf 1.000;
+  impedance_pf 1.000;
+  impedance_fraction 0.300000;
+  current_fraction 0.300000;
+  power_fraction 0.400000;
+}
+
+
+object refrigerator {
+  name ${4:fridge_};
+  // schedule_skew 2338;
+  //door_opening_criterion REFRIGERATOR;
+  parent ; // same house name as the house to which this appliance is to be connected
+  daily_door_opening 20;          
+  state COMPRESSSOR_OFF_NORMAL;
+  energy_used 13.5;
+  defrost_criterion DOOR_OPENINGS;
+  delay_defrost_time 600;
+  door_opening_criterion 24;
+};
+
+object range {
+  name ${5:cooking_range_};
+  parent ; // same house name as the house to which this appliance is to be connected
+  // schedule_skew 0;
+  
+  //Oven
+  oven_volume 4;
+  heating_element_capacity 1;
+  oven_setpoint 150;
+  temperature 70;
+  thermostat_deadband 8;
+  location INSIDE;
+  oven_UA 2.9;
+  food_density 5;
+  specificheat_food 1;
+  time_oven_setting 3600;
+  queue_oven 0.85;
+  //demand_oven ;
+  //oven_demand ;
+
+  //Cooktop
+  cooktop_energy_baseline 0.5;
+  cooktop_coil_setting_1 2;
+  cooktop_coil_setting_2 1;
+  cooktop_coil_setting_3 1.7;
+  cooktop_interval_setting_1 240;
+  cooktop_interval_setting_2 900;
+  cooktop_interval_setting_3 120;
+  queue_cooktop 0.99;
+  queue_min 0;
+  queue_max 2;
+  //time_cooktop_setting ;
+  //demand_cooktop ;
+};
+
+object dishwasher {
+  name ${6:dishwasher_};
+  parent ; // same house name as the house to which this appliance is to be connected
+  // schedule_skew 2338;
+  energy_baseline 0.9;
+  Heateddry_option_check TRUE;
+  control_power 10;
+  motor_power 250;
+  dishwasher_coil_power_1 580;
+  dishwasher_coil_power_2 695;
+  dishwasher_coil_power_3 950;
+  queue 1;
+  queue_min 0;
+  queue_max 2;
+  //daily_dishwasher_demand DISHWASHER;
+};
+
+object dryer {
+  name ${7:dryer_};
+  parent ; // same house name as the house to which this appliance is to be connected
+  // schedule_skew 2338;
+  energy_baseline 3;
+  controls_power 10;
+  motor_power 200;
+  dryer_coil_power 5800;
+  queue 0.8;
+  queue_min 0;
+  queue_max 2;
+  //daily_dryer_demand DRYER;
+};
+
+object clotheswasher {
+  name ${8:clotheswasher_};
+  parent ; // same house name as the house to which this appliance is to be connected
+  // schedule_skew 2338;
+  queue 1.7;
+  state STOPPED;
+  queue_min 0;
+  queue_max 2;
+  //demand CLOTHESWASHER;
+};
+
+object microwave {
+  name ${9:microwave_};
+  parent ; // same house name as the house to which this appliance is to be connected
+
+  // shape "type: unknown";
+  // load "power_factor: 0.000000; power.r: 0.000000";
+  // energy +0+0i kVAh;
+
+  // microwave properties
+  installed_power 1000 kW;
+  standby_power +0 kW;
+  circuit_split +0;
+  state OFF;
+  cycle_length +0 s;
+  runtime +0 s;
+  state_time +0 s;
+};
+
+
+
+    </content>
+    <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+    <tabTrigger>house_detail</tabTrigger>
+    <!-- Optional: Set a scope to limit where the snippet will trigger -->
+    <scope>source.gridlabd</scope>
+</snippet>
