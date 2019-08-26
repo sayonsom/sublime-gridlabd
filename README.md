@@ -91,12 +91,12 @@ gridlabd simple_feeder.glm
 
 A CSV file ("simple_feeder_records.csv") with the simulation results are generated. Since there is one house, you can start by playing around with the thermal integrity of the house inside the house code block. Here's a plot on the customer's energy consumption at the end of the day and how much he/she has to pay to the utility.
 
-![Billing Costs and Energy Consumption Simulation](example_built_models/figs/simple_feeder_1_house.png?raw=True "Simple Feeder with One House")
+![Billing Costs and Energy Consumption Simulation](example_built_models/figs/simple_feeder_1_house_results.png?raw=True "Simple Feeder with One House")
 
 
-##### Did you notice the efficiency boost? 
+#### Did you notice the efficiency boost? 
 
-7 lines of code to generate 265 lines of code. I would call that 99% efficiency improvement. In terms of time, it took me 2 minutes to build the model, compared to 1 hour the first time I built it using the naive method. 
+> 7 lines of code to generate 265 lines of code. I would call that 99% efficiency improvement. In terms of time, it took me 2 minutes to build the model, compared to 1 hour the first time I built it using the naive method. 
 
 Let's try building something a little more complex and realistic below. 
 
