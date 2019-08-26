@@ -15,6 +15,33 @@ module residential {
     implicit_enduses LIGHTS; 
 };
 
+module generators;
+
+// ADDING CLIMATE DATA 
+// ================
+
+// module climate;
+
+// object csv_reader {
+//      name model_csv_reader;
+//      filename "weather_data.csv";
+// };
+
+
+// object climate {
+//    // Note:  TMY2 files do not support DST. Hence TMY3 files downloaded from NREL website as CSV files are preferred.
+//    // tmyfile "CA-Sacramento.tmy2"; 
+//       reader model_csv_reader;
+//       name model_climate;
+//       tmyfile "weather_data.csv";
+     
+// };
+
+// --------------------
+
+
+
+
 // CO-SIMULATION
 // ================
 // ~ delete the following if not doing HELICS co-simulation
@@ -35,6 +62,26 @@ object node {
     phases ABCN;
     nominal_voltage 7200;
 }
+
+object node {
+    name n1;
+    phases ABC;
+    nominal_voltage 7200.0;  // line-to-neutral voltage, i,e. line-line volt/sqrt(3)
+}
+
+object node {
+    name n2;
+    phases ABC;
+    nominal_voltage 7200.0;  // line-to-neutral voltage, i,e. line-line volt/sqrt(3)
+}
+
+object node {
+    name n3;
+    phases ABC;
+    nominal_voltage 7200.0;  // line-to-neutral voltage, i,e. line-line volt/sqrt(3)
+}
+
+
 
 
 // LINE CONFIGURATIONS
@@ -76,43 +123,6 @@ object line_spacing {
 }
 
 
-// Default Underground Lines
-// -------------------------
-
-object line_configuration {
-    name default_ug_line_configuration;
-    conductor_A underground_line_conductor_100;
-    conductor_B underground_line_conductor_100;
-    conductor_C underground_line_conductor_100;
-    conductor_N underground_line_conductor_100;
-    spacing default_ug_line_spacing;
-}
-
-object underground_line_conductor {
-    name underground_line_conductor_100;
-    outer_diameter 1.980000;
-    conductor_gmr 0.036800;
-    conductor_diameter 1.150000;
-    conductor_resistance 0.105000;
-    neutral_gmr 0.003310;
-    neutral_resistance 5.903000;
-    neutral_diameter 0.102000;
-    neutral_strands 20.000000;
-    shield_gmr 0.000000;
-    shield_resistance 0.000000;
-}
-
-object line_spacing { 
-    name default_ug_line_spacing;
-    distance_AB 0.0 in; 
-    distance_BC 0.0 in; 
-    distance_AC 0.0 in; 
-    distance_AN 0.0 in; 
-    distance_BN 0.0 in; 
-    distance_CN 0.0 in; 
-} 
-
-
 // Default Triplex Lines
 // -------------------------
 
@@ -133,85 +143,124 @@ object triplex_line_conductor: {
 }
 
 
+
 // LINES
-// ==========================
+// ======
 
 
-
-// TRANSFORMERS
-// ==========================
-
-
-
-// SWITCHES
-// ==========================
-
-
-
-// VOLTAGE REGULATORS
-// ==========================
-// ~ delete these lines if not used in the model
-
-
-
-object regulator_configuration {
-    name smart_voltage_regulator; // To simulate communication-enabled voltage regulators
-    connect_type 1;
-    band_center 122.000;
-    band_width 2.0;
-    time_delay 15.0;
-    raise_taps 16;
-    lower_taps 16;
-    current_transducer_ratio 1;
-    power_transducer_ratio 58;
-    compensator_r_setting_A 1.5;
-    compensator_x_setting_A 3.0;
-    CT_phase "ABC";
-    PT_phase "ABC";
-    regulation 0.10;
-    Control REMOTE_NODE; // Options- LINE_DROP_COMP, OUTPUT_VOLTAGE, REMOTE_NODE (needs sense_node in regulator object)
-    control_level INDIVIDUAL; // Options - BANK
-    Type B;
-    tap_pos_A 0;
-    tap_pos_B 0;
-    tap_pos_C 0;
-}
-
-
-// Voltage Regulator
-
-object regulator {
-    name voltage_regulator_;
-    phases "ABC";
-    sense_node node_; // Voltage at this node will cause tap changes
+object overhead_line {
+    name oh_line_1;
+    phases ABC;
     from feeder_head;
-    to n3;
-    configuration smart_voltage_regulator;
+    to n1;
+    length 10;
+    configuration default_oh_line_configuration;
 }
 
 
+object overhead_line {
+    name oh_line_2;
+    phases ABC;
+    from n1;
+    to n2;
+    length 120;
+    configuration default_oh_line_configuration;
+}
 
 
-
-// CAPACITOR
-// =========================
-// Required for maintaining voltage levels and reactive power management
-
-
-
-// END-USE CUSTOMERS
-// =========================
-
+object overhead_line {
+    name oh_line_3;
+    phases ABC;
+    from n2;
+    to n3;
+    length 120;
+    configuration default_oh_line_configuration;
+}
 
 
-// PLAYERS
-// =======================
+// New Feeder Branch
+
+object transformer {
+     name xmfr_1;
+     phases AS; // Options - AS, BS, CS
+     from n3; // Can be a three phase node
+     to secondary_meter; // name of the triplex meter connecting the customer
+     configuration xmfr_config;
+}
+
+object transformer_configuration {
+     name xmfr_config;
+     connect_type SINGLE_PHASE_CENTER_TAPPED; // Options - 
+     install_type PADMOUNT; // Options - POLETOP (cheaper), VAULT (for building)
+     primary_voltage 7200 V;
+     secondary_voltage 120 V; 
+     power_rating 50;
+     powerA_rating 50; // make sure to match the A, B, C phase, default is A
+     impedance 0.015+0.0675j;
+}
+
+object triplex_meter {
+     // this meter can also be replaced with a triplex_node
+     name secondary_meter;
+     phases AS; // Options - AS, BS, CS, Same as transformer above
+     nominal_voltage 120.00;
+}
+object triplex_line {
+     name sample_load_tl;
+     from secondary_meter; // Same as triplex meter name above
+     to customer_meter;
+     phases AS; // Options - AS, BS, CS, Same as transformer above
+     length 10;
+     configuration default_triplex_line_configuration;
+}
+object triplex_meter {
+     name customer_meter; // Same as "to" in triplex_line above
+     phases AS;  // Options - AS, BS, CS, Same as transformer above
+     nominal_voltage 120.00;
+}
 
 
+object house {
+  name my_house;
+  parent customer_meter; // meter name from above
+  floor_area 1500; 
+  // schedule_skew 3600; // shifting the normal appliance schedule by these many seconds
 
-// RECORDERS
-// =======================
+  heating_system_type HEAT_PUMP;
+  heating_COP 3.0;
+  heating_setpoint 65;
+
+  cooling_system_type ELECTRIC;
+  cooling_setpoint 74;
+
+  thermal_integrity_level VERY_GOOD; // UNKNOWN, VERY_GOOD, GOOD, ABOVE_NORMAL, NORMAL, BELOW_NORMAL, LITTLE, VERY_LITTLE
+  air_temperature 70;
+  mass_temperature 70;
+  cooling_COP 2.6;
+}
+
+object ZIPload {
+  name zipload_;
+  parent my_house; // same house name as the house to which the ZIP Load is to be connected
+  base_power 2; // kW  Base real power of the total load at nominal voltage
+  // schedule_skew 7200;
+  heatgain_fraction 0.9;
+  power_pf 1.000;
+  current_pf 1.000;
+  impedance_pf 1.000;
+  impedance_fraction 0.300000;
+  current_fraction 0.300000;
+  power_fraction 0.400000;
+}  
 
 
+// Multi-Recorder
+// --------------
 
+object multi_recorder{
+    name save_data;
+    file simple_feeder_records.csv;
+    interval 3600;
+    property customer_meter:measured_real_energy; 
+}
     

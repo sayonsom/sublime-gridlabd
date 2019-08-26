@@ -14,3 +14,4 @@ object load {
     <!-- Optional: Set a scope to limit where the snippet will trigger -->
     <scope>source.gridlabd</scope>
 </snippet>
+

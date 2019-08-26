@@ -66,25 +66,48 @@ _Alphabetically_:
 
 #### Example 1: One Node Test System
 
+Let's build a simple model to see how much money one can save by improving the insulation of their homes. GridLAB-D can help us with these kind of simulations. We'll build a simple one-house model:
+
+![Simple Feeder with One House](example_built_models/figs/simple_feeder_1_house.png?raw=True "Simple Feeder with One House")
+
+Here is the sequence of shortcodes you need to write in your Sublime Text 3 to generate the GridLAB-D model:
+
+```
+node
+node
+node
+oh_line
+oh_line
+oh_line
+new_branch
+multi_recorder
+```
+
+Now, after the model is built, you can go to the terminal, navigate to the directory where the code is, and then: 
+
+```
+gridlabd simple_feeder.glm
+```
+
+A CSV file ("simple_feeder_records.csv") with the simulation results are generated. Since there is one house, you can start by playing around with the thermal integrity of the house inside the house code block. Here's a plot on the customer's energy consumption at the end of the day and how much he/she has to pay to the utility.
+
+![Billing Costs and Energy Consumption Simulation](example_built_models/figs/simple_feeder_1_house.png?raw=True "Simple Feeder with One House")
 
 
+##### Did you notice the efficiency boost? 
+
+7 lines of code to generate 265 lines of code. I would call that 99% efficiency improvement. In terms of time, it took me 2 minutes to build the model, compared to 1 hour the first time I built it using the naive method. 
+
+Let's try building something a little more complex and realistic below. 
 
 #### Example 2: Simple Smart Feeder Test System (S2FTS)
 
 ![Simple Unbalanced Feeder Test System](example_built_models/figs/sufts.png?raw=True "S2FTS Schematic Diagram")
 
-Follow along this Youtube video tutorial, or download the paper for the all the data. (If you use this model in your research, please consider citing it. Here are some common citation formats Bibtex, IEEE Format. 
+Follow along this Youtube video tutorial, or download the paper for the all the data. (If you use this model in your research, please consider citing it. Here are some common citation formats: Bibtex, IEEE Format. 
 
-You can download the code (i.e. GridLAB-D model) for the S2FTS model here. 
+You can download the code (i.e. GridLAB-D model) for the S2FTS model in the 'example_built_models' sub-directory of this repository. 
 
-##### Did you notice an efficiency boost? 
-
-16 lines of typing to generate XXXX lines of code. I would call that XX.XX % efficiency improvement. In terms of time, it took me 4 minutes to build the model, compared to 2.5 hours the first time I built it using the naive method. Here's a list of `sublime-gridlabd` shortcodes.
-
-
-###  Installing `Sublime_GridLABD`
-
-Feel free to build your own model using the shortcodes above. 
 
 ###  Road map and other editors?
 In 2016, an open-source [language support for GridLAB-D](https://github.com/nicorikken/language-glm) was published for Atom. However, it doesn't have the ease of building models that `sublime-gridlabd` has. Also, Atom is inefficient for handling a large-sized GLM file, where Sublime Text has a natural advantage. That is why I thought building a developer pack for Sublime would suffice. If there's sufficient interest, I will roll out similar GridLAB-D development packages for other editors (VIM, VSCode, etc).  
